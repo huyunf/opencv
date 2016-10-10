@@ -43,18 +43,70 @@ int main(int argc, char** argv)
 			g_dontset = 1;
 			cv::setTrackbarPos("Position", "Example2_4", current_pos);
 
-//#define SMOOTHED
-#ifdef SMOOTHED
 			// Create an image to hold the smoothed output
 			cv::Mat out;
 			// Do the smoothing
 			// Could use GaussianBlur(), blur(), medianBlur() or bilateralFilter().
-			cv::GaussianBlur(frame, out, cv::Size(5, 5), 3, 3);
-			cv::GaussianBlur(out, out, cv::Size(5, 5), 3, 3);
-			cv::imshow("Example2_4", out);
-#else
-			cv::imshow("Example2_4", frame);
-#endif
+
+			enum mode {
+				normal = 0,
+				gaussian = 1,
+				pyrdown = 2,
+				canny = 3,
+				modifyPix = 4,
+				writerAVI = 5,
+			};
+
+			mode m = modifyPix;
+
+			if (m == gaussian) {
+				cv::GaussianBlur(frame, out, cv::Size(5, 5), 3, 3);
+				cv::GaussianBlur(out, out, cv::Size(5, 5), 3, 3);
+				cv::imshow("Example2_4", out);
+			}
+			else if (m == pyrdown){
+				cv::pyrDown(frame, out);
+				cv::imshow("Example2_4", out);
+			}
+			else if (m == canny) {
+				cv::Mat img_gry, img_cny;
+				cv::cvtColor(frame, img_gry, CV_RGB2GRAY);
+				cv::namedWindow("Example Gray", cv::WINDOW_AUTOSIZE);
+				cv::namedWindow("Example Canny", cv::WINDOW_AUTOSIZE);
+				cv::imshow("Example Gray", img_gry);
+				cv::Canny(img_gry, img_cny, 10, 100, 3, true);
+				cv::imshow("Example Canny", img_cny);
+			}
+			else if (m == modifyPix) {
+				cv::Mat img_gry, img_cny;
+				cv::cvtColor(frame, img_gry, CV_RGB2GRAY);
+				int x = 16, y = 32;
+				cv::Vec3b intensity = frame.at< cv::Vec3b >(y, x);
+				uchar blue	= intensity.val[0]; // We could write img_rgb.at< cv::Vec3b >(x,y)[0]
+				uchar green = intensity.val[1];
+				uchar red	= intensity.val[2];
+				std::cout << "At (x,y) = (" << x << ", " << y <<
+					"): (blue, green, red) = (" <<
+					(unsigned int)blue <<
+					", " << (unsigned int)green << ", " <<
+					(unsigned int)red << ")" << std::endl;
+
+				for (y = 100; y < 200; y++)
+					for (x = 100; x < 200; x++)
+					{
+						frame.at< cv::Vec3b >(y, x)[0] = 128;
+						frame.at< cv::Vec3b >(y, x)[1] = 128;
+						frame.at< cv::Vec3b >(y, x)[2] = 128;
+					}
+
+				std::cout << "Gray pixel there is: " <<
+					(unsigned int)img_gry.at<uchar>(x, y) << std::endl;
+				cv::imshow("Example2_4", frame);
+			}
+			else{
+				cv::imshow("Example2_4", frame);
+			}
+
 			g_run -= 1;
 		}
 		char c = (char)cv::waitKey(10);

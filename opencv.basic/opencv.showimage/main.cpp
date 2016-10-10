@@ -2,7 +2,7 @@
 #include <iostream>
 
 #define SHOW_IMAGE
-//#define CANNY_CHECK
+#define CANNY_CHECK
 
 int main(int argc, char** argv) 
 {
