@@ -1,2 +1,3 @@
 ﻿  main.cpp
+d:\work\opencv\work\opencv.git\opencv.basic\opencv.datatype\main.cpp(38): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
   opencv.datatype.vcxproj -> D:\work\opencv\work\opencv.git\opencv.basic\x64\Debug\opencv.datatype.exe

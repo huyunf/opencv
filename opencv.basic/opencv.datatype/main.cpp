@@ -30,6 +30,15 @@ int main(int argc, char** argv)
 	box = cv::Rect(-1, -1, 0, 0);
 	image = cv::Scalar::all(0);
 	cv::namedWindow("Box Example");
+
+	// Check Point
+	cv::Point3i p0(1, 2, 3);
+	cv::Point3i p1(4, 5, 6);
+
+	float x = p0.dot(p1);
+	cv::Point3i cy(p0.cross(p1));
+
+
 	// Here is the crucial moment where we actually install
 	// the callback. Note that we set the value of ‘params’ to
 	// be the image we are working with so that the callback
