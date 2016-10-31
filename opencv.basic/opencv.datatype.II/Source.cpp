@@ -4,6 +4,7 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
+	int start = cv::getCPUTickCount();
 	
 	//-----------------------------------------------------------------------------------------------------
 	cv::Mat m;
@@ -36,8 +37,8 @@ int main(int argc, char** argv)
 	cout << n + m + l<< endl << endl;
 
 	//-----------------------------------------------------------------------------------------------------
-	cv::Mat vec0(1, 5, CV_32SC1);
-	cv::Mat vec1(1, 5, CV_32SC1);
+	cv::Mat vec0(1, 5, CV_32FC1);
+	cv::Mat vec1(1, 5, CV_32FC1);
 	cv::Mat vecRes;
 
 	cv::randu(vec0, -10, 10);
@@ -53,6 +54,20 @@ int main(int argc, char** argv)
 
 	cv::addWeighted(vec0, 1.4, vec1, 0.8, 2.4, vecRes);
 	cout << "addWeighted(vec0, vec1): " << vecRes << endl;
+
+	cv::add(vec0, vec1, vecRes);
+	cout << "add(vec0, vec1): " << vecRes << endl;
+
+	cv::dct(vec0, vecRes);
+	cout << "dct(vec0): " << vecRes << endl;
+
+	cv::normalize(vec0, vecRes, 0.23, cv::NORM_L2);
+	cout << "normalize(vec0): " << vecRes << endl;
+
+
+	int end = cv::getCPUTickCount();
+
+	cout << "start:" << start << " end:" << end << " diff:" << end - start << endl;
 
 	return 0;
 }

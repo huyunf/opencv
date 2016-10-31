@@ -1,2 +1,4 @@
 ﻿  Source.cpp
+d:\work\opencv\work\opencv.git\opencv.basic\opencv.datatype.ii\source.cpp(7): warning C4244: 'initializing': conversion from 'int64' to 'int', possible loss of data
+d:\work\opencv\work\opencv.git\opencv.basic\opencv.datatype.ii\source.cpp(68): warning C4244: 'initializing': conversion from 'int64' to 'int', possible loss of data
   opencv.datatype.II.vcxproj -> D:\work\opencv\work\opencv.git\opencv.basic\x64\Debug\opencv.datatype.II.exe
